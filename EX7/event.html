@@ -1,0 +1,46 @@
+<!-- URK24CS1111 -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Event Theme Designer</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#theme").change(function () {
+                $("#preview").css("background", $(this).val());
+            });
+
+            $("#heading").on("input", function () {
+                $("#preview h2").text($(this).val());
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+    <h2>EventSphere Theme Designer</h2>
+
+    <input id="heading" placeholder="Enter event name">
+
+    <select id="theme">
+        <option value="lavender">Royal Purple</option>
+        <option value="pink">Blush Pink</option>
+        <option value="lightblue">Sky Blue</option>
+        <option value="gold">Gold</option>
+    </select>
+
+    <div id="preview" style="background:lavender;padding:30px;text-align:center;">
+        <h2>Welcome to Our Event!</h2>
+        <p>Make your event memorable!</p>
+    </div>
+
+</body>
+
+</html>
