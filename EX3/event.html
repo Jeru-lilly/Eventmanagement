@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EventSphere - Event Management</title>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, Garamond, serif;
+  background: #eef6ff;
+  color: #222;
+}
+
+header {
+  background: linear-gradient(90deg, #7B2CBF, #9D4EDD);
+  color: white;
+  text-align: center;
+  padding: 40px 30px;
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 5px black;
+}
+
+header h1 { margin: 0 0 10px; font-size: 2.2rem; }
+header p { margin: 0; font-size: 1rem; font-style: italic; letter-spacing: 1px; }
+
+nav {
+  background: #b8f2e6;
+  padding: 12px;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+
+nav a {
+  display: inline-block;
+  padding: 10px 18px;
+  margin: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 5px;
+  transition: background .2s, color .2s;
+}
+
+nav a:link { color: #4b0082; }
+nav a:visited { color: #006400; }
+nav a:hover { background: #7B2CBF; color: white; }
+nav a:active { background: orange; color: black; }
+
+.section {
+  margin: 25px;
+  padding: 25px 30px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px lightgray;
+}
+
+h2 { color: #4b0082; margin-top: 0; }
+h3 { color: #7B2CBF; }
+
+p {
+  margin: 20px;
+  text-align: justify;
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 1px;
+  line-height: 30px;
+}
+
+.hero-img {
+  display: block;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 700px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.section a:link { color: #7B2CBF; }
+.section a:visited { color: #4b0082; }
+.section a:hover { color: #9D4EDD; text-decoration: underline; }
+
+dl { margin: 10px 20px; }
+dt { font-weight: bold; font-size: 1.05rem; color: #4b0082; margin-top: 12px; }
+dd { margin-left: 20px; font-style: italic; line-height: 1.7; }
+
+ol, ul { margin: 10px 20px; line-height: 2; }
+ol ol { list-style-type: lower-alpha; }
+ul ul { list-style-type: circle; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td { border: 2px solid gray; }
+
+th {
+  background: #7B2CBF;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+td {
+  padding: 15px;
+  background: #f7f7ff;
+  text-align: center;
+}
+
+tr:hover td { background: #ede7f6; }
+
+footer {
+  background: #4b0082;
+  color: white;
+  text-align: center;
+  padding: 20px 15px;
+  margin-top: 30px;
+}
+
+footer p { margin: 6px; font-style: normal; font-size: 15px; color: white; }
+footer a { color: #b8f2e6; }
+footer a:hover { color: white; }
+
+hr { border: none; border-top: 2px solid #ede7f6; margin: 10px 0; }
+
+.reg-header {
+  background: #4b0082;
+  color: white;
+  padding: 25px;
+  text-align: center;
+}
+
+.reg-header h1 { margin: 0 0 8px; font-size: 2rem; }
+.reg-header p { margin: 0; font-style: italic; }
+
+label {
+  display: block;
+  margin-top: 14px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+input[type="url"],
+input[type="search"],
+input[type="time"],
+input[type="week"],
+input[type="month"],
+select,
+textarea {
+  width: 100%;
+  padding: 9px 12px;
+  margin-top: 5px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 6px;
+  margin-top: 10px;
+  transform: scale(1.2);
+}
+
+.radio-group, .check-group {
+  margin-top: 6px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+textarea { resize: vertical; }
+
+progress {
+  width: 100%;
+  height: 18px;
+  margin-top: 6px;
+  accent-color: #4b0082;
+}
+
+fieldset {
+  border: 2px solid #4b0082;
+  border-radius: 8px;
+  padding: 20px 25px;
+  margin-top: 15px;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #4b0082;
+  padding: 0 8px;
+}
+
+.btn-submit {
+  background: #4b0082;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 18px;
+  margin-right: 10px;
+}
+
+.btn-submit:hover { background: #7B2CBF; }
+
+.btn-reset {
+  background: #ccc;
+  color: #333;
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 18px;
+}
+
+.btn-reset:hover { background: #aaa; }
+
+audio, video {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+iframe {
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.banner-img {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 — Main Website -->
+
+<header id="top">
+  <h1>EventSphere - Event Management</h1>
+  <p>Creating Memorable Events with Style and Perfection</p>
+</header>
+
+<nav>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#packages">Packages</a>
+  <a href="#contact">Contact</a>
+  <a href="#registration">Register</a>
+</nav>
+
+<div class="section" id="about">
+  <h2>About Us</h2>
+  <p>EventSphere is a professional event management company that organizes weddings, corporate meetings, birthday parties, concerts, and college events.</p>
+
+  <p>We provide creative planning, decoration, catering, photography, and entertainment services to make every event unforgettable.</p>
+
+  <p><a href="https://www.eventbrite.com" target="_blank">Visit Eventbrite for more events</a></p>
+
+  <p><a href="#packages">View Our Packages →</a></p>
+
+  <p><a href="#top">↑ Back to Top</a></p>
+
+  <a href="https://unsplash.com/s/photos/event" target="_blank">
+    <img class="hero-img"
+      src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=700"
+      alt="Event Management - Grand Ballroom">
+  </a>
+</div>
+
+<div class="section" id="services">
+  <h2>Our Services</h2>
+  <hr>
+
+  <h3>What We Offer</h3>
+  <dl>
+    <dt>Wedding Planning</dt>
+    <dd>Elegant decorations and complete event coordination for your special day.</dd>
+
+    <dt>Corporate Events</dt>
+    <dd>Professional conferences, seminars, and meetings tailored to your brand.</dd>
+
+    <dt>Birthday Parties</dt>
+    <dd>Theme-based celebrations with entertainment, cake, and surprises.</dd>
+  </dl>
+
+  <h3>Event Planning Process</h3>
+  <ol>
+    <li>Planning
+      <ol>
+        <li>Venue Booking</li>
+        <li>Budget Preparation</li>
+      </ol>
+    </li>
+
+    <li>Execution
+      <ol>
+        <li>Decoration</li>
+        <li>Event Coordination</li>
+      </ol>
+    </li>
+  </ol>
+
+  <h3>What's Included</h3>
+  <ul>
+    <li>Entertainment
+      <ul>
+        <li>DJ</li>
+        <li>Live Band</li>
+      </ul>
+    </li>
+
+    <li>Food
+      <ul>
+        <li>Veg Menu</li>
+        <li>Non-Veg Menu</li>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<div class="section" id="packages">
+  <h2>Event Packages</h2>
+  <hr>
+
+  <table>
+    <tr>
+      <th>Package</th>
+      <th>Suitable For</th>
+      <th>Price</th>
+    </tr>
+
+    <tr>
+      <td>Silver</td>
+      <td>Birthday</td>
+      <td>₹20,000</td>
+    </tr>
+
+    <tr>
+      <td>Gold</td>
+      <td>Wedding</td>
+      <td>₹75,000</td>
+    </tr>
+
+    <tr>
+      <td>Platinum</td>
+      <td>Corporate Events</td>
+      <td>₹1,50,000</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section" id="contact">
+  <h2>Contact Us</h2>
+  <hr>
+
+  <p>📧 Email: <a href="mailto:eventsphere@gmail.com">eventsphere@gmail.com</a></p>
+  <p>📞 Phone: <a href="tel:+919876543210">+91 98765 43210</a></p>
+  <p>📍 Location: Coimbatore, Tamil Nadu</p>
+</div>
+
+<!-- PAGE 2 — Registration Portal -->
+
+<div class="reg-header" id="registration">
+  <h1>EventSphere Registration Portal</h1>
+  <p>Register for your favourite events</p>
+</div>
+
+<div class="section">
+  <h2>About Registration</h2>
+
+  <p style="margin:0 0 15px; font-style:normal;">
+    Fill the form below to participate in our upcoming events.
+    Choose your preferred package and upload the required documents.
+  </p>
+
+  <img class="banner-img"
+    src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600"
+    alt="Event Banner">
+</div>
+
+<div class="section">
+  <h2>Registration Form</h2>
+  <hr>
+
+  <form action="#" method="get">
+    <fieldset>
+      <legend>Participant Details</legend>
+
+      <label for="fname">Full Name</label>
+      <input type="text" id="fname" name="fname" placeholder="Enter your full name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <label for="pwd">Password</label>
+      <input type="password" id="pwd" name="pwd" placeholder="Create a password">
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="+91 XXXXX XXXXX">
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob">
+
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter your age">
+
+      <label>Gender</label>
+      <div class="radio-group">
+        <label style="font-weight:normal; margin:0;">
+          <input type="radio" name="gender" value="male"> Male
+        </label>
+
+        <label style="font-weight:normal; margin:0;">
+          <input type="radio" name="gender" value="female"> Female
+        </label>
+
+        <label style="font-weight:normal; margin:0;">
+          <input type="radio" name="gender" value="other"> Other
+        </label>
+      </div>
+
+      <label>Interests</label>
+      <div class="check-group">
+        <label style="font-weight:normal; margin:0;">
+          <input type="checkbox" name="interest" value="music"> Music
+        </label>
+
+        <label style="font-weight:normal; margin:0;">
+          <input type="checkbox" name="interest" value="dance"> Dance
+        </label>
+
+        <label style="font-weight:normal; margin:0;">
+          <input type="checkbox" name="interest" value="sports"> Sports
+        </label>
+      </div>
+
+      <label for="event">Select Event</label>
+      <select id="event" name="event">
+        <option>-- Choose an Event --</option>
+        <option>Wedding Expo</option>
+        <option>Corporate Meet</option>
+        <option>Birthday Carnival</option>
+        <option>College Fest</option>
+      </select>
+
+      <label for="idproof">Upload ID Proof</label>
+      <input type="file" id="idproof" name="idproof">
+
+      <label for="website">Your Website (optional)</label>
+      <input type="url" id="website" name="website" placeholder="https://yoursite.com">
+
+      <label for="search">Search Event</label>
+      <input type="search" id="search" name="search" placeholder="Type to search...">
+
+      <label for="ptime">Preferred Time</label>
+      <input type="time" id="ptime" name="ptime">
+
+      <label for="pweek">Preferred Week</label>
+      <input type="week" id="pweek" name="pweek">
+
+      <label for="pmonth">Preferred Month</label>
+      <input type="month" id="pmonth" name="pmonth">
+
+      <label for="feedback">Feedback / Special Requests</label>
+      <textarea id="feedback" name="feedback" rows="5" placeholder="Write your message here..."></textarea>
+
+      <label>Booking Progress</label>
+      <progress value="70" max="100"></progress>
+
+      <p style="margin:4px 0 0; font-size:14px; font-style:normal; color:#666;">
+        70% complete
+      </p>
+
+      <br>
+
+      <input type="submit" value="Register Now" class="btn-submit">
+      <input type="reset" value="Clear Form" class="btn-reset">
+
+    </fieldset>
+  </form>
+</div>
+
+<div class="section">
+  <h2>Available Packages</h2>
+  <hr>
+
+  <table>
+    <tr>
+      <th>Package</th>
+      <th>Duration</th>
+      <th>Price</th>
+    </tr>
+
+    <tr>
+      <td>Silver</td>
+      <td>1 Day</td>
+      <td>₹10,000</td>
+    </tr>
+
+    <tr>
+      <td>Gold</td>
+      <td>2 Days</td>
+      <td>₹25,000</td>
+    </tr>
+
+    <tr>
+      <td>Platinum</td>
+      <td>3 Days</td>
+      <td>₹50,000</td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>Background Music</h2>
+  <p style="font-style:normal; margin:0 0 10px;">
+    Enjoy some event highlights audio:
+  </p>
+
+  <audio controls>
+    <source src="1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<div class="section">
+  <h2>Promotional Video</h2>
+  <p style="font-style:normal; margin:0 0 10px;">
+    Watch our event highlights:
+  </p>
+
+  <video controls style="max-width:700px; width:100%; border-radius:8px;">
+    <source src="1.mp4" type="video/mp4">
+    Your browser does not support the video element.
+  </video>
+</div>
+
+<div class="section">
+  <h2>Event Inspiration Gallery</h2>
+  <p style="font-style:normal; margin:0 0 15px;">
+    Reference images for your day:
+  </p>
+
+  <div style="display:flex; flex-wrap:wrap; gap:15px; justify-content:center;">
+
+    <img src="Screenshot 2026-07-15 212600.png" alt="Event Image 1"
+      style="width:280px; height:180px; object-fit:cover; border-radius:8px;">
+
+    <img src="Screenshot 2026-07-15 212622.png" alt="Event Image 2"
+      style="width:280px; height:180px; object-fit:cover; border-radius:8px;">
+
+    <img src="Screenshot 2026-07-15 212753.png" alt="Event Image 3"
+      style="width:280px; height:180px; object-fit:cover; border-radius:8px;">
+
+    <img src="Screenshot 2026-07-15 212809.png" alt="Event Image 4"
+      style="width:280px; height:180px; object-fit:cover; border-radius:8px;">
+
+    <img src="Screenshot 2026-07-15 212820.png" alt="Event Image 5"
+      style="width:280px; height:180px; object-fit:cover; border-radius:8px;">
+
+  </div>
+</div>
+
+<div class="section">
+  <h2>Our Location</h2>
+
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125322.17673946395!2d76.89505615!3d11.0016865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1691000000000!5m2!1sen!2sin"
+    width="100%"
+    height="350"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+</div>
+
+<footer>
+  <p>&copy; 2026 EventSphere | Designed using HTML5 &amp; CSS3</p>
+  <p><a href="#top">↑ Go to Top</a></p>
+</footer>
+
+</body>
+</html>
