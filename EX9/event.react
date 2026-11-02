@@ -1,0 +1,5 @@
+npm create vite@latest modern-ui ---- template react
+cd modern-ui
+npm install
+npm install react-router-dom
+npm run dev
